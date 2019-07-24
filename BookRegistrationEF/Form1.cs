@@ -43,5 +43,24 @@ namespace BookRegistrationEF
             CboCustomers.DataSource = customers;
             CboCustomers.DisplayMember = nameof(Customer.FullName);
         }
+
+        private void BtnAddCustomer_Click(object sender, EventArgs e)
+        {
+            // Hard code customer for testing purposes
+            Customer cust = new Customer()
+            {
+                FirstName = "D",
+                LastName = "Reynolds",
+                DateOfBirth = DateTime.Now,
+                Title = "Mr."
+            };
+
+            CustomerDB.AddCustomer(cust);
+
+            string output = $"Added {cust.CustomerID} : {cust.FullName}";
+            MessageBox.Show(output);
+
+            PopulateCustomerList();
+        }
     }
 }

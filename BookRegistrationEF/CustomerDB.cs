@@ -47,7 +47,15 @@ namespace BookRegistrationEF
         /// <returns></returns>
         public static Customer AddCustomer(Customer c)
         {
-            throw new NotImplementedException();
+            using (var context = new BookRegistrationEntities())
+            {
+                context.Customer.Add(c);
+                // SaveChanges MUST BE CALLED for insert/update/delete
+                context.SaveChanges();
+
+                // Return newly added customer with CustomerID populated
+                return c;
+            }
         }
     }
 }
