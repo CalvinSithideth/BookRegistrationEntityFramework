@@ -20,6 +20,17 @@ namespace BookRegistrationEF
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateCustomerList();
+            PopulateBooks();
+        }
+
+        /// <summary>
+        /// Adds all books to the form in alphabetical order
+        /// </summary>
+        private void PopulateBooks()
+        {
+            List<Book> books = BookDB.GetBooks();
+            CboBooks.DataSource = books;
+            CboBooks.DisplayMember = nameof(Book.Title);
         }
 
         /// <summary>
