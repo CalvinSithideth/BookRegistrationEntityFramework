@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BookRegistrationEF
 {
+    /// <summary>
+    /// Basic CRUD functionality for customers
+    /// </summary>
     static class CustomerDB
     {
         /// <summary>
@@ -55,6 +59,29 @@ namespace BookRegistrationEF
 
                 // Return newly added customer with CustomerID populated
                 return c;
+            }
+        }
+
+        public static Customer UpdateCustomer(Customer c)
+        {
+            using (var context = new BookRegistrationEntities())
+            {
+                context.Customer.Add(c); // Add to context
+                // Tell EF we are updating an existing entity
+                context.Entry(c).State = EntityState.Modified; // Tell EF it has been modified
+                context.SaveChanges();
+                return c;
+            }
+        }
+
+        public static void DeleteCustomer(Customer c)
+        {
+            using (var context = new BookRegistrationEntities())
+            {
+                context.Customer.Add(c); // "Track" with EF
+                context.Entry(c).State = EntityState.Deleted; // Tell EF we are removing it
+                int rowsAffected = context.SaveChanges(); // Update on database
+                // int rowsAffected is optional
             }
         }
     }
